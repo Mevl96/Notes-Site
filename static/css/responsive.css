@@ -1,0 +1,29 @@
+@media screen and (max-width: 1199px) {
+
+
+
+
+
+}
+
+/*---------For Tablets(767-979)-------*/
+
+
+@media screen and (max-width: 979px) {
+    .container{
+        width: 768px;
+    }
+
+
+}
+/*---------For Phones (320-767) -------*/
+@media screen and (max-width: 767px) {
+
+
+    .container {
+        width: 100%;
+    }
+
+
+}
+
