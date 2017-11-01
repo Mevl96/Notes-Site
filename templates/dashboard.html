@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>OnlineNote</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--fonts-->
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet">
+	<!--logo-->
+	<link rel="shortcut icon" href="/static/img/left-wheel.png" type="image/png">
+	<!--icons-->
+	<link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
+	<!--reboot styles-->
+	<link rel="stylesheet" href="/static/css/reboot.css">
+	<!-- Bootstrap -->
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<!-- CSS - main -->
+	<link rel="stylesheet" type="text/css" href="/static/css/dash.css">
+	<!-- CSS - responsive -->
+	<link rel="stylesheet" type="text/css" href="/static/css/responsive.css">
+
+</head>
+<body>
+
+<div class="leftBar">
+	<div class="logo"><img src="/static/img/Logo.png" alt=""></div>
+	<div class="create-new">
+		<div class="create-item">
+			<a href="#">
+				<i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+				<p class="fontSize16px">Create a new note</p>
+			</a>
+		</div>
+		<div class="create-item">
+			<a href="#">
+				<i class="fa fa-folder-o" aria-hidden="true"></i>
+				<p class="fontSize16px">Create a new folder</p>
+			</a>
+		</div>
+	</div>
+	<div class="allFolders">
+		{% for c in cats %}
+			<div class="folder">
+				<a href="#" class=" fontSize20px">
+					<span>{{ c.name }}</span>{#
+					<div class="folder-nmb">
+						{{ c.notes.__len__ }}
+					</div>#}
+					<a href="#" class="trash">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</a>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+	<a href="#" class="delete">
+		<div class="del">
+
+			<i class="fa fa-trash" aria-hidden="true"></i>
+		</div>
+	</a>
+</div>
+<div class="mainSpace">
+	<span class="nameFolder fontSize40px">New Folder</span>
+	<div class="note">
+		<div class="noteHeader fontSize14px">
+			<span class="noteDate">01.02.17</span>
+			<span class="deleteFromNote">
+                <a href="#">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </a>
+            </span>
+		</div>
+		<textarea name="noteText" id="" cols="30" rows="10" class="noteText">Lorem ipsum dolor sit amet.</textarea>
+	</div>
+
+</div>
+<div class="log-out">
+	<h4 class="fontSize20px">{{ u.name }}</h4>
+	<a href="/logout" class="fontSize20px">Logout</a>
+</div>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

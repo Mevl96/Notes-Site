@@ -18,6 +18,7 @@ class Category(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 	name = db.Column(db.String(24), unique=True, nullable=False)
 	created_at = db.Column(db.TIMESTAMP, nullable=False, default=func.current_timestamp())
+	notes = db.relationship('Note', backref='category')
 
 
 class Note(db.Model):

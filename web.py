@@ -35,5 +35,16 @@ def index():
 	return render_template('index.html')
 
 
+@app.route('/dash')
+def dash():
+	if 'user' not in session:
+		return redirect('/')
+	from models import User
+	from models import Category
+	user = db.session.query(User).get(session['user'])
+	categories = db.session.query(Category).filter(Category.user_id == user.id).all()
+	return render_template('dashboard.html', u=user, cats=categories)
+
+
 if __name__ == '__main__':
 	app.run()

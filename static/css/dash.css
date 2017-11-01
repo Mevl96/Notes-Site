@@ -1,0 +1,274 @@
+
+/*===========main styles=======*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Ubuntu ,Arial,sans-serif;
+    /*border: 1px solid black;*/
+
+}
+
+.container{
+    width: 1170px;
+    margin: 0 auto;
+    height: 100%;
+
+}
+.clearfix:after{
+    content: '';
+    display: table;
+    width: 100%;
+    clear: both;
+}
+
+.fontSize10px{font-size: 10px;}
+.fontSize12px{font-size: 12px;}
+.fontSize14px{font-size: 14px;}
+.fontSize16px{font-size: 16px;}
+.fontSize18px{font-size: 18px;}
+.fontSize20px{font-size: 20px;}
+.fontSize22px{font-size: 22px;}
+.fontSize24px{font-size: 24px;}
+.fontSize26px{font-size: 26px;}
+.fontSize28px{font-size: 28px;}
+.fontSize30px{font-size: 30px;}
+.fontSize36px{font-size: 36px;}
+.fontSize40px{font-size: 40px;}
+.fontSize44px{font-size: 44px;}
+
+
+
+/*=========header==============*/
+
+body{
+    background: #def0ff;
+    position: relative;
+    float: left;
+    min-width: 1200px;
+    min-height: 800px;
+    width: 100%;
+    height: 100vh;
+}
+
+
+
+
+/*LOG OUT**/
+.log-out{
+    position: absolute;
+    top: 0;
+    right: 150px;
+    height:55px;
+    width: 350px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0px 6px 32px 0px rgba(0, 0, 0, 0.18);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.log-out a{
+    background-color: #efefef;
+    width: 136px;
+    height:35px;
+    border: 1px solid #bfbfbf;
+    border-radius: 5px;
+    box-shadow: 0px 2px 3px 0px rgba(101, 99, 99, 0.75);
+    text-align: center;
+
+    text-decoration: none;
+    color: #585858;
+    -webkit-transition: 0.5s ;
+}
+
+.log-out a:hover{
+    background-color: #dedede;
+
+
+}
+
+/*==================LEFT BAR================**/
+.leftBar{
+    position: relative;
+    float: left;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 260px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 6px 32px 0px rgba(0, 0, 0, 0.18);
+}
+
+.logo img{
+    padding: 15px 15px 20px 15px;
+    max-width: 100%;
+}
+.logo{
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.fa-sticky-note-o,.fa-folder-o{
+    font-size: 60px;
+    color: rgba(0,0,0,0.8);
+
+}
+.create-new{
+    padding: 15px;
+    height: 155px;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.18);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+.create-item{
+    text-align: center;
+}
+.allFolders{
+    height: auto;
+    width: 100%;
+    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.18);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    overflow: auto;
+
+
+}
+.folder{
+    color:#000;
+    position: relative;
+    width: 100%;
+    height: 50px;
+display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+
+}
+.folder:hover{
+
+}
+.folder a{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: #000;
+    text-decoration: none;
+}
+.folder a span:first-child{
+    width: 80%;
+    margin-left: 10%;
+    text-align: center;
+}
+.folder-nmb,.folder .trash{
+    width: 10%;
+    font-size: 14px;
+
+    visibility: visible;
+}
+.folder .trash{
+    display: none;
+}
+
+.trash .fa-trash{
+    font-size: 14px;
+}
+
+.delete{
+    text-decoration: none !important;
+
+
+}
+.del{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    background-color: rgba(0, 0, 0, 0.14);
+    box-shadow: 0px 6px 32px 0px rgba(0, 0, 0, 0.18);
+
+}
+.fa-trash{
+    font-size: 60px;
+    color:black;
+}
+
+/*===================MAIN SPACE==============*/
+
+.mainSpace{
+    width: 81%;
+    height: 100%;
+    float: left;
+    position: relative;
+}
+.nameFolder{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    color:rgba(0,0,0,0.2);
+}
+
+/*Note*/
+.note{
+    height: auto;
+    position: absolute;
+    top:300px;
+    left: 400px;
+    background-color: #fde576;
+    padding: 0;
+    box-shadow: 5px 9px 7px 0px rgba(0, 0, 0, 0.11);
+}
+
+.noteHeader{
+    height: 31px;
+    background: #e2c748;
+    display: flex;
+    text-align: right;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+    position: relative;
+
+}
+.deleteFromNote{
+    position: absolute;
+    right: 5px;
+    font-size: 16px;
+
+}
+.deleteFromNote a{
+    text-decoration: none;
+    color: black;
+}
+.note textarea{
+
+    background-color: #fde576;
+    border: none;
+    min-height: 100px;
+    min-width: 200px;
+    margin: 0;
+    padding: 10px;
+    resize: both;
+}
+
+.note textarea::-webkit-scrollbar-track{
+    background-color: #fde576;
+}
+
+.note textarea::-webkit-scrollbar{
+    width: 10px;
+    background-color: #fde576;
+
+}
+
+.note textarea::-webkit-scrollbar-thumb{
+
+     border-width:1px 1px 1px 2px;
+     border-color: #e2c748;
+     background-color: #e2c748;
+    border-radius: 5px;
+ }
