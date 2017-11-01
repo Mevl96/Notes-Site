@@ -26,12 +26,12 @@
 			<div class="navbarTop">
 				<a href="#">
 					<div class="logUp">
-						<span>LOGIN UP</span>
+						<span>SIGN UP</span>
 					</div>
 				</a>
-				<a href="#">
+				<a href="#" onclick="document.getElementById('id01').style.display='block'">
 					<div class="logIn">
-						<span>LOGIN IN</span>
+						<span>SIGN IN</span>
 					</div>
 
 				</a>
@@ -142,9 +142,63 @@
 		</div>
 	</div>
 </div>
+
+<div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'"
+		class="close" title="Close Modal">&times;</span>
+
+	<!-- Modal Content -->
+	<form class="modal-content animate" id="form_auth">
+		<div class="container">
+			<label><b>Username</b></label>
+			<input type="text" placeholder="Enter Username" name="login" required>
+			<br>
+			<label><b>Password</b></label>
+			<input type="password" placeholder="Enter Password" name="password" required>
+			<br>
+			<button type="submit">Login</button>
+		</div>
+
+		<div class="container" style="background-color:#f1f1f1">
+			<button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
+				Cancel
+			</button>
+		</div>
+	</form>
+</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/static/js/bootstrap.min.js"></script>
+<script>
+	// Get the modal
+	var modal = document.getElementById('id01');
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function (event) {
+		if (event.target === modal) {
+			modal.style.display = "none";
+		}
+	};
+
+	$(document).ready(function () {
+		$('#form_auth').on('submit', function (e) {
+			e.preventDefault();
+			$.ajax({
+				url: '/ajax/auth',
+				method: 'POST',
+				data: $(this).serializeArray()
+			}).done(function (data) {
+				if (data.result) {
+					alert('OK');
+				} else {
+					alert('Invalid password');
+				}
+			}).fail(function (e) {
+				alert('FAIL');
+			});
+		});
+	});
+</script>
 </body>
 </html>

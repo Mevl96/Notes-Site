@@ -1,9 +1,8 @@
-import hashlib
+from hashlib import md5
 from flask import Flask, render_template, request, jsonify, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 from config import Config
-from models import User
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -13,9 +12,10 @@ db = SQLAlchemy(app)
 
 @app.route('/ajax/auth', methods=['POST'])
 def auth():
-	user = User.query() \
-		.filter_by(User.login == request.form['login']) \
-		.filter_by(User.password == hashlib.md5(request.form['password'])) \
+	from models import User
+	user = db.session.query(User) \
+		.filter(User.login == request.form['login']) \
+		.filter(User.password == md5(request.form['password'].encode('utf-8')).hexdigest()) \
 		.one_or_none()
 	if user is not None:
 		session['user'] = user.id
