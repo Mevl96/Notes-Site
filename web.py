@@ -35,11 +35,6 @@ def index():
 	return render_template('index.html')
 
 
-@app.route('/registration')
-def registration():
-	return render_template('registration.html')
-
-
 @app.route('/dash')
 def dash():
 	if 'user' not in session:
