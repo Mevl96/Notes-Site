@@ -1,8 +1,7 @@
-from functools import wraps
-
-from hashlib import md5
 from flask import Flask, render_template, request, jsonify, session, redirect, abort
 from flask_sqlalchemy import SQLAlchemy
+from functools import wraps
+from hashlib import md5
 
 from config import Config
 
@@ -154,6 +153,17 @@ def dash():
 	from models import Category
 	user = db.session.query(User).get(session['user'])
 	categories = db.session.query(Category).filter(Category.user_id == user.id).all()
+	return render_template('dashboard.html', u=user, cats=categories)
+
+
+@app.route('/dash_mock')
+def dash_mock():
+	from models import User
+	user = User()
+	user.id = 1
+	user.name = "Test name"
+	user.login = "Login"
+	categories = []
 	return render_template('dashboard.html', u=user, cats=categories)
 
 
