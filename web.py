@@ -1,5 +1,5 @@
 from hashlib import md5
-from flask import Flask, render_template, request, jsonify, session, redirect
+from flask import Flask, render_template, request, jsonify, session, redirect, abort
 from flask_sqlalchemy import SQLAlchemy
 
 from config import Config
@@ -35,9 +35,25 @@ def index():
 	return render_template('index.html')
 
 
-@app.route('/registration')
+@app.route('/registration', methods=['GET','POST'])
 def registration():
-	return render_template('registration.html')
+	if request.method == 'GET':
+		return render_template('registration.html')
+	else:
+		try:
+			from models import User
+			user = User()
+			user.name = request.form['form_name']
+			user.login = request.form['form_email']
+			user.password = md5(request.form['form_pswd1'].encode('utf-8')).hexdigest()
+			db.session.add(user)
+			db.session.flush()
+			db.session.commit()
+			session['user'] = user.id
+			return redirect('/dash')
+		except:
+			db.session.rollback()
+			abort(500)
 
 
 @app.route('/dash')
