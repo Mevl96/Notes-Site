@@ -41,8 +41,19 @@
 
 /*=========header==============*/
 
+html{
+
+}
+
 body{
-    background: #def0ff;
+    /*background: #def0ff;*/
+
+	background:url('../img/background.jpg') no-repeat center center;
+	/* Элемент html всегда будет располагаться на всю высоту окна браузера */
+	min-height:100%;
+	/* Выводим фон на весь экран */
+	background-size:cover;
+
     position: relative;
     float: left;
     min-width: 1200px;
@@ -57,16 +68,16 @@ body{
 /*LOG OUT**/
 .log-out{
     position: absolute;
-    top: 0;
-    right: 150px;
+    top: 2%;
+    right: 2%;
     height:55px;
     width: 350px;
-    background-color: white;
     border-radius: 3px;
     box-shadow: 0px 6px 32px 0px rgba(0, 0, 0, 0.18);
     display: flex;
     justify-content: space-around;
     align-items: center;
+    color:white;
 }
 
 .log-out a{
@@ -74,10 +85,8 @@ body{
     width: 136px;
     height:35px;
     border: 1px solid #bfbfbf;
-    border-radius: 5px;
-    box-shadow: 0px 2px 3px 0px rgba(101, 99, 99, 0.75);
+    border-radius: 2px;
     text-align: center;
-
     text-decoration: none;
     color: #585858;
     -webkit-transition: 0.5s ;
@@ -85,8 +94,6 @@ body{
 
 .log-out a:hover{
     background-color: #dedede;
-
-
 }
 
 /*==================LEFT BAR================**/
@@ -207,13 +214,13 @@ display: flex;
 }
 .nameFolder{
     position: absolute;
-    top: 10%;
-    left: 10%;
-    color:rgba(0,0,0,0.2);
+    top: 3%;
+    left: 3%;
+    color:white;
 }
 
 /*Note*/
-.note{
+/*.note{
     height: auto;
     position: absolute;
     top:300px;
@@ -271,4 +278,74 @@ display: flex;
      border-color: #e2c748;
      background-color: #e2c748;
     border-radius: 5px;
- }
+ }*/
+
+#pad{
+    visibility: hidden;
+	position:relative;
+	width: 374px;
+	margin: 225px auto 40px;
+}
+
+#note{
+	font: normal 15px 'Courgette', cursive;
+	line-height: 17px;
+	color:#444;
+	background: url('../img/mid.png') repeat-y;
+	display: block;
+	border: none;
+	width: 374px;
+	min-height: 250px;
+	overflow: hidden;
+	resize: none;
+	outline: 0px;
+	padding: 0 10px 0 35px;
+    margin-top: -10px;
+}
+
+#pad h2{
+	background: url('../img/header.png') no-repeat;
+	overflow: hidden;
+	text-indent: -9999px;
+	height: 69px;
+	position: relative;
+}
+
+#pad:after{
+	position:absolute;
+	content:'';
+	background:url('../img/footer.png') no-repeat;
+	width:100%;
+	height:40px;
+}
+
+a.buttonAdd {
+    position: relative;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    text-shadow: 0 -1px 1px #cc5500;
+    user-select: none;
+    padding: .8em 2em;
+    outline: none;
+    border-radius: 1px;
+    background: linear-gradient(to left, rgba(0,0,0,.3), rgba(0,0,0,.0) 50%, rgba(0,0,0,.3)), linear-gradient(#d77d31, #fe8417, #d77d31);
+    background-size: 100% 100%, auto;
+    background-position: 50% 50%;
+    box-shadow: inset #ebab00 0 -1px 1px, inset 0 1px 1px #ffbf00, #cc7722 0 0 0 1px, #000 0 10px 15px -10px;
+    transition: 0.2s;
+    margin: 0px 0px 0px 47%;
+    width:100px;
+}
+a.buttonAdd:hover {
+    background-size: 140% 100%, auto;
+}
+a.buttonAdd:active {
+    top: 1px;
+    color: #ffdead;
+    box-shadow: inset #ebab00 0 -1px 1px, inset 0 1px 1px #ffbf00, #cc7722 0 0 0 1px, 0 10px 10px -9px #000;
+}
+
+#buttonAddDiv {
+    visibility: hidden;
+}
