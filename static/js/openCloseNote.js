@@ -1,9 +1,11 @@
-	function openCloseNote(id){
-    	display = document.getElementById(id).style.visibility;
-
-    	if(display=='hidden'){
-       		document.getElementById(id).style.visibility='unset';
-    	}else{
-		   document.getElementById(id).style.visibility='hidden';
-    	}
+function openCloseNote(id, buttonId){
+	var note = $(id);
+	var button = $(buttonId);
+	if(note.css('display') !== 'none') {
+		button.fadeOut();
+		note.fadeOut();
+	} else {
+		button.fadeIn();
+		note.fadeIn();
 	}
+}

@@ -20,7 +20,7 @@
 	<!-- CSS - responsive -->
 	<link rel="stylesheet" type="text/css" href="/static/css/responsive.css">
 	<!-- Шрифт из коллекции Google -->
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Courgette" />
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Courgette"/>
 
 </head>
 <body>
@@ -29,33 +29,37 @@
 	<div class="logo"><img src="/static/img/Logo.png" alt=""></div>
 	<div class="create-new">
 		<div class="create-item">
-			<a href="#" onclick="openCloseNote('pad'),openCloseNote('buttonAddDiv'); return false">
+			<a href="javascript:openCloseNote('#pad','#buttonAddDiv');">
 				<i class="fa fa-sticky-note-o" aria-hidden="true"></i>
 				<p class="fontSize16px">Create a new note</p>
 			</a>
 		</div>
 		<div class="create-item">
-			<a href="#">
+			<a href="javascript:createCategory();">
 				<i class="fa fa-folder-o" aria-hidden="true"></i>
 				<p class="fontSize16px">Create a new folder</p>
 			</a>
 		</div>
 	</div>
-	<div class="allFolders">
+	<table class="allFolders">
 		{% for c in cats %}
-			<div class="folder">
-				<a href="#" class=" fontSize20px">
-					<span>{{ c.name }}</span>{#
-					<div class="folder-nmb">
-						{{ c.notes.__len__ }}
-					</div>#}
-					<a href="#" class="trash">
-						<i class="fa fa-trash" aria-hidden="true"></i>
-					</a>
-				</a>
-			</div>
+			<tr class="folder">
+				<td>
+					<label for="cat{{ c.id }}">
+						<input type="radio" id="cat{{ c.id }}" value="{{ c.id }}">
+						<span>{{ c.name }}</span>
+					</label>
+				</td>
+			</tr>
+			{% for n in notes[c.id] %}
+				<tr class="note">
+					<td>
+						<a href="#">{{ n.title }}</a>
+					</td>
+				</tr>
+			{% endfor %}
 		{% endfor %}
-	</div>
+	</table>
 	<a href="#" class="delete">
 		<div class="del">
 
@@ -76,14 +80,14 @@
 		</div>
 		<textarea name="noteText" id="" cols="30" rows="10" class="noteText">Lorem ipsum dolor sit amet.</textarea>
 	</div>-->
-	<div id="pad">
+	<div id="pad" style="display: none;">
 		<h2>Записка</h2>
-		<!--<input id="header" maxlength="25" size="40" value="Вася">-->
+		<input id="noteTitle" maxlength="25" size="40" value="New note">
 		<textarea id="note"></textarea>
 	</div>
 
-	<div id="buttonAddDiv">
-		<a href="#" class="buttonAdd">Add</a>
+	<div id="buttonAddDiv" style="display: none;">
+		<a href="javascript:saveNote()" class="buttonAdd">Save</a>
 	</div>
 
 </div>

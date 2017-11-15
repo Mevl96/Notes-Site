@@ -45,18 +45,18 @@ def notes(cat_id):
 
 
 @auth_required
-@app.route('/ajax/notes/new')
+@app.route('/ajax/notes/new', methods=['POST'])
 def newnote():
 	try:
 		from models import Note
 		note = Note()
 		note.category_id = request.form['category']
-		note.content = ''
-		note.title = 'New note'
+		note.content = request.form['content']
+		note.title = request.form['title']
 		db.session.add(note)
 		db.session.flush()
 		db.session.commit()
-		return jsonify({'created': note})
+		return jsonify({'id': note.id})
 	except:
 		db.session.rollback()
 		abort(500)
@@ -107,7 +107,7 @@ def newcat():
 		db.session.add(cat)
 		db.session.flush()
 		db.session.commit()
-		return jsonify({'created', cat})
+		return jsonify({'name': cat.name, 'id': cat.id})
 	except:
 		db.session.rollback()
 		abort(500)
@@ -149,22 +149,24 @@ def registration():
 def dash():
 	if 'user' not in session:
 		return redirect('/')
-	from models import User
-	from models import Category
+	from models import User, Note, Category
 	user = db.session.query(User).get(session['user'])
 	categories = db.session.query(Category).filter(Category.user_id == user.id).all()
-	return render_template('dashboard.html', u=user, cats=categories)
+	notes = {}
+	for cat in categories:
+		notes[cat.id] = db.session.query(Note).filter(Note.category_id == cat.id).all()
+	return render_template('dashboard.html', u=user, cats=categories, notes=notes)
 
 
-@app.route('/dash_mock')
-def dash_mock():
-	from models import User
-	user = User()
-	user.id = 1
-	user.name = "Test name"
-	user.login = "Login"
-	categories = []
-	return render_template('dashboard.html', u=user, cats=categories)
+# @app.route('/dash_mock')
+# def dash_mock():
+# 	from models import User
+# 	user = User()
+# 	user.id = 1
+# 	user.name = "Test name"
+# 	user.login = "Login"
+# 	categories = []
+# 	return render_template('dashboard.html', u=user, cats=categories)
 
 
 if __name__ == '__main__':
