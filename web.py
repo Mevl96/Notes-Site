@@ -158,16 +158,5 @@ def dash():
 	return render_template('dashboard.html', u=user, cats=categories, notes=notes)
 
 
-# @app.route('/dash_mock')
-# def dash_mock():
-# 	from models import User
-# 	user = User()
-# 	user.id = 1
-# 	user.name = "Test name"
-# 	user.login = "Login"
-# 	categories = []
-# 	return render_template('dashboard.html', u=user, cats=categories)
-
-
 if __name__ == '__main__':
 	app.run()
