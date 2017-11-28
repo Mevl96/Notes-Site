@@ -1,13 +1,28 @@
-from flask import render_template, request, jsonify, session, redirect, abort, Blueprint
+from flask import Flask, render_template, request, jsonify, session, redirect, abort
+from flask_sqlalchemy import SQLAlchemy
+from functools import wraps
 from hashlib import md5
 
-from app import db, auth_required
-from models import User
+from config import Config
 
-bp = Blueprint('bp', __name__, template_folder='templates')
+app = Flask(__name__)
+app.config.from_object(Config)
+app.secret_key = 'rwf0r3rj0e0rjnenr003dc'
+db = SQLAlchemy(app)
 
 
-@bp.route('/ajax/auth', methods=['POST'])
+def auth_required(f):
+	@wraps(f)
+	def decorated(*args, **kwargs):
+		if 'user' not in session:
+			abort(403)
+		else:
+			return f(*args, **kwargs)
+
+	return decorated
+
+
+@app.route('/ajax/auth', methods=['POST'])
 def auth():
 	from models import User
 	user = db.session.query(User) \
@@ -22,7 +37,7 @@ def auth():
 
 
 @auth_required
-@bp.route('/ajax/notes/by-cat/<int:cat_id>', methods=['GET'])
+@app.route('/ajax/notes/by-cat/<int:cat_id>', methods=['GET'])
 def notes(cat_id):
 	from models import Note
 	notes = db.session.query(Note).filter(Note.category_id == cat_id).all()
@@ -30,7 +45,7 @@ def notes(cat_id):
 
 
 @auth_required
-@bp.route('/ajax/notes/new', methods=['POST'])
+@app.route('/ajax/notes/new', methods=['POST'])
 def newnote():
 	try:
 		from models import Note
@@ -48,7 +63,7 @@ def newnote():
 
 
 @auth_required
-@bp.route('/ajax/notes/<int:note_id>', methods=['GET', 'DELETE', 'POST'])
+@app.route('/ajax/notes/<int:note_id>', methods=['GET', 'DELETE', 'POST'])
 def note_act(note_id):
 	from models import Note
 	if request.method == 'GET':
@@ -82,7 +97,7 @@ def note_act(note_id):
 
 
 @auth_required
-@bp.route('/ajax/category/new', methods=['POST'])
+@app.route('/ajax/category/new', methods=['POST'])
 def newcat():
 	try:
 		from models import Category
@@ -98,19 +113,19 @@ def newcat():
 		abort(500)
 
 
-@bp.route('/logout')
+@app.route('/logout')
 def logout():
 	session.pop('user', None)
 	return redirect('/')
 
 
-@bp.route('/')
+@app.route('/')
 def index():
 	return render_template('index.html')
 
 
-@bp.route('/registration', methods=['GET', 'POST'])
-def registration(self: User):
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
 	if request.method == 'GET':
 		return render_template('registration.html')
 	else:
@@ -130,7 +145,7 @@ def registration(self: User):
 			abort(500)
 
 
-@bp.route('/dash')
+@app.route('/dash')
 def dash():
 	if 'user' not in session:
 		return redirect('/')
@@ -141,3 +156,18 @@ def dash():
 	for cat in categories:
 		notes[cat.id] = db.session.query(Note).filter(Note.category_id == cat.id).all()
 	return render_template('dashboard.html', u=user, cats=categories, notes=notes)
+
+
+# @app.route('/dash_mock')
+# def dash_mock():
+# 	from models import User
+# 	user = User()
+# 	user.id = 1
+# 	user.name = "Test name"
+# 	user.login = "Login"
+# 	categories = []
+# 	return render_template('dashboard.html', u=user, cats=categories)
+
+
+if __name__ == '__main__':
+	app.run()
