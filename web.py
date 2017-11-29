@@ -113,6 +113,20 @@ def newcat():
 		abort(500)
 
 
+@auth_required
+@app.route('/ajax/category/<int:cat_id>', methods=['DELETE'])
+def catact(cat_id):
+	try:
+		from models import Category
+		db.session.query(Category).filter(Category.id == cat_id).delete()
+		db.session.flush()
+		db.session.commit()
+		return jsonify({'result': True})
+	except:
+		db.session.rollback()
+		abort(500)
+
+
 @app.route('/logout')
 def logout():
 	session.pop('user', None)

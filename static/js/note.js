@@ -85,7 +85,7 @@ function saveNote() {
 			data: {title: pad.find('#noteTitle').val(), category: cat, content: pad.find('#note').val()}
 		}).done(function (data) {
 			$('#nid').val(data.id);
-			$('#f' + cat).after('<tr class="note" id="n' + data.id + '">' +
+			$('#f' + cat).after('<tr class="note" id="n' + data.id + '"  data-cat="' + cat + '">' +
 				'<td><a href="javascript:openNote(' + data.id + ');">' + pad.find('#noteTitle').val() + '</a>' +
 				'</td></tr>');
 			snackbar('Note successfully created');
@@ -142,28 +142,45 @@ function newNote() {
 
 function trash() {
 	var pad = $('#pad');
-	var button = $('#buttonAddDiv');
-	var nid = parseInt(pad.find('#nid').val());
-	if (nid === -1) {
-		button.fadeOut();
-		pad.fadeOut();
-		snackbar('Note successfully deleted');
-		return
-	}
-	$.ajax({
-		url: '/ajax/notes/' + nid,
-		type: 'DELETE'
-	}).done(function (data) {
-		if (data.result) {
+	if (pad.css('display') !== 'none') {
+		var button = $('#buttonAddDiv');
+		var nid = parseInt(pad.find('#nid').val());
+		if (nid === -1) {
 			button.fadeOut();
 			pad.fadeOut();
-			$('#n' + nid).remove();
 			snackbar('Note successfully deleted');
-		} else {
-			snackbar('Error');
+			return
 		}
-	}).fail(function (e) {
-		snackbar('Error');
-	});
-
+		$.ajax({
+			url: '/ajax/notes/' + nid,
+			type: 'DELETE'
+		}).done(function (data) {
+			if (data.result) {
+				button.fadeOut();
+				pad.fadeOut();
+				$('#n' + nid).remove();
+				snackbar('Note successfully deleted');
+			} else {
+				snackbar('Error');
+			}
+		}).fail(function (e) {
+			snackbar('Error');
+		});
+	} else {
+		var cat = $('.allFolders').find('input:checked').val();
+		$.ajax({
+			url: '/ajax/category/' + cat,
+			type: 'DELETE'
+		}).done(function (data) {
+			if (data.result) {
+				$('#f' + cat).remove();
+				$('[data-cat=' + cat + ']').remove();
+				snackbar('Category successfully deleted');
+			} else {
+				snackbar('Error');
+			}
+		}).fail(function (e) {
+			snackbar('Error');
+		});
+	}
 }

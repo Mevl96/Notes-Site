@@ -52,7 +52,7 @@
 				</td>
 			</tr>
 			{% for n in notes[c.id] %}
-				<tr class="note" id="n{{ n.id }}">
+				<tr class="note" id="n{{ n.id }}" data-cat="{{ c.id }}">
 					<td>
 						<a href="javascript:openNote({{ n.id }});">{{ n.title }}</a>
 					</td>
