@@ -71,7 +71,7 @@ def note_act(note_id):
 		if note is None:
 			abort(404)
 		else:
-			return jsonify({'note': note})
+			return jsonify({'title': note.title, 'content': note.content, 'id': note.id})
 	elif request.method == 'DELETE':
 		try:
 			db.session.query(Note).filter(Note.id == note_id).delete()
