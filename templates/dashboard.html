@@ -52,7 +52,7 @@
 				</td>
 			</tr>
 			{% for n in notes[c.id] %}
-				<tr class="note">
+				<tr class="note" id="n{{ n.id }}">
 					<td>
 						<a href="javascript:openNote({{ n.id }});">{{ n.title }}</a>
 					</td>
@@ -60,7 +60,7 @@
 			{% endfor %}
 		{% endfor %}
 	</table>
-	<a href="#" class="delete">
+	<a href="javascript:trash()" class="delete">
 		<div class="del">
 
 			<i class="fa fa-trash" aria-hidden="true"></i>

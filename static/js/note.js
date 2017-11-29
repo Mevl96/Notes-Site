@@ -1,8 +1,10 @@
 function snackbar(message) {
-    var bar = $('#snackbar');
-    bar.empty().append(message);
+	var bar = $('#snackbar');
+	bar.empty().append(message);
 	bar.addClass('show');
-    setTimeout(function(){ bar.removeClass('show'); }, 3000);
+	setTimeout(function () {
+		bar.removeClass('show');
+	}, 3000);
 }
 
 
@@ -79,11 +81,9 @@ function saveNote() {
 			data: {title: pad.find('#noteTitle').val(), category: cat, content: pad.find('#note').val()}
 		}).done(function (data) {
 			$('#nid').val(data.id);
-			$('#f' + cat).after('<tr class="note">' +
-				'<td>' +
-				'<a href="javascript:openNote(' + data.id + ');">' + pad.find('#noteTitle').val() + '</a>' +
-				'</td>' +
-				'</tr>');
+			$('#f' + cat).after('<tr class="note" id="n' + data.id + '">' +
+				'<td><a href="javascript:openNote(' + data.id + ');">' + pad.find('#noteTitle').val() + '</a>' +
+				'</td></tr>');
 			snackbar('Note successfully created');
 		}).fail(function (e) {
 			snackbar('Error');
@@ -126,7 +126,7 @@ function newNote() {
 	var note = $('#pad');
 	var button = $('#buttonAddDiv');
 	if (note.css('display') !== 'none') {
-		button.hide()
+		button.hide();
 		note.hide();
 	}
 	note.find('textarea').val('');
@@ -134,4 +134,32 @@ function newNote() {
 	note.find('#nid').val(-1);
 	button.fadeIn();
 	note.fadeIn();
+}
+
+function trash() {
+	var pad = $('#pad');
+	var button = $('#buttonAddDiv');
+	var nid = parseInt(pad.find('#nid').val());
+	if (nid === -1) {
+		button.fadeOut();
+		pad.fadeOut();
+		snackbar('Note successfully deleted');
+		return
+	}
+	$.ajax({
+		url: '/ajax/notes/' + nid,
+		type: 'DELETE'
+	}).done(function (data) {
+		if (data.result) {
+			button.fadeOut();
+			pad.fadeOut();
+			$('#n'+nid).remove();
+			snackbar('Note successfully deleted');
+		} else {
+			snackbar('Error');
+		}
+	}).fail(function (e) {
+		snackbar('Error');
+	});
+
 }
