@@ -57,7 +57,7 @@ function createCategory() {
 		type: 'POST',
 		data: {name: catName}
 	}).done(function (data) {
-		$('.allFolders').first().append('<tr class="folder">' +
+		$('.allFolders').first().append('<tr class="folder" id="f' + data.id + '">' +
 			'<td>' +
 			'<label for="cat' + data.id + '">' +
 			'<input type="radio" id="cat' + data.id + '" value="' + data.id + '">' +
@@ -65,6 +65,10 @@ function createCategory() {
 			'</label>' +
 			'</td>' +
 			'</tr>');
+		$('.folder').off('click', 'label').on('click', 'label', function (e) {
+			$('.allFolders').find('input').prop('checked', false);
+			$(this).find('input').prop('checked', true);
+		});
 	}).fail(function (e) {
 		snackbar('Error');
 	});
@@ -153,7 +157,7 @@ function trash() {
 		if (data.result) {
 			button.fadeOut();
 			pad.fadeOut();
-			$('#n'+nid).remove();
+			$('#n' + nid).remove();
 			snackbar('Note successfully deleted');
 		} else {
 			snackbar('Error');
