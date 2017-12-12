@@ -15,6 +15,7 @@ class TestCase(unittest.TestCase):
 		self.app = app.test_client()
 		from models import User
 		user = User()
+		user.id = 1
 		user.name = 'Test'
 		user.login = 'test@mail.ru'
 		from _md5 import md5
@@ -47,6 +48,19 @@ class TestCase(unittest.TestCase):
 			))
 			assert b'true' in rv.data
 			assert 'user' in flask.session
+
+	def test_new_cat(self):
+		with app.test_client() as c:
+			with c.session_transaction() as sess:
+				sess['user'] = 1
+			rv = c.post('/ajax/category/new', data=dict(
+				name='New note'
+			))
+			assert b'New note' in rv.data
+			import json
+			cid = json.loads(rv.data)['id']
+			rv = c.delete('/ajax/category/' + str(cid))
+			assert b'true' in rv.data
 
 
 if __name__ == '__main__':

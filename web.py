@@ -108,7 +108,8 @@ def newcat():
 		db.session.flush()
 		db.session.commit()
 		return jsonify({'name': cat.name, 'id': cat.id})
-	except:
+	except Exception as e:
+		print(e)
 		db.session.rollback()
 		abort(500)
 
